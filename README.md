@@ -1,29 +1,21 @@
 # 2019Demo-MusicPlayer
 # 项目简介
 ## 项目结构
+
+```
 musicPlayer
-
 |——index.html
-
 |——css
-
       |——font.css
-      
       |——common.css
-      
       |——index.css
-      
       |——media.css
-
 |——js
-
       |——index.js
-
 |——music
-
       |——music.mp3
-
 |——README.md
+```
 
 ## 功能介绍
 
