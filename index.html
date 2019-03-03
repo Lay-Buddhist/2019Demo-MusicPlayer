@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/media.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="cover">
+    <div class="bg bg-blur"></div>
+    <div class="panel col-sm-9">
+        <aside class="col-sm-2">
+            <h2>
+                音乐库
+            </h2>
+            <ul class="music-list">
+                <li>说谎</li>
+            </ul>
+        </aside>
+        <div class="music-box col-sm-10">
+            <div class="music-intro">
+                <div class="music-border4 music-border4-animate">
+                    <div class="music-border3">
+                        <div class="music-border2">
+                            <div class="music-border1">
+                                <img src="http://p2.music.126.net/THitUnu7hNMmlSwf-pU6Pw==/109951163112321465.jpg?param=130y130" alt="" class="music-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="regulator">
+                <div class="progress">
+                    <div class="bar">
+                        <div class="progress-total">
+                            <div class="progress-now"></div>
+                        </div>
+                    </div>
+                    <div class="time">
+                        0:00
+                    </div>
+                </div>
+                <div class="music">
+                    <div class="info col-sm-1">
+
+                    </div>
+                    <div class="control col-sm-11 clearfix">
+                        <div class="control-title fl">
+
+                        </div>
+                        <span class="previous control-icon">&#xe800;</span>
+                        <span class="control-icon pause" id="pp">&#xe61e;</span>
+                        <span class="next control-icon">&#xe7ff;</span>
+                        <div class="control2 fr">
+                            <a href="" class="icon-me">&#xe60a;</a>
+                            <a href="https://github.com/Lay-Buddhist" class="icon-me">&#xe600;</a>
+                            <p class="icon-me volume">&#xe757;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.onselectstart=new Function("return false");
+    function $(selector) {
+        return document.querySelector(selector);
+    }
+    function $$(selector){
+        return document.querySelectorAll(selector)
+    }
+
+    var currentIndex = 0;
+    var audioObject = new Audio();
+    var clock;
+    var musiclist = [];
+    //获取音乐
+    function getMusicList(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET','/music.json',true);
+        xhr.addEventListener('readystatechange', function () {
+            if(xhr.readyState == 4) {
+                if((xhr.status >= 200 && xhr.status < 300) ||  xhr.status === 304) {
+                    callback(JSON.parse(this.responseText));
+                }else {
+                    console.log("获取数据失败")
+                }
+            }
+        })
+        xhr.send();
+        xhr.onerror = function () {
+            console.log("网络异常")
+        }
+    }
+
+
+    function loadMusic(musicobj) {
+        console.log('begin play',musicobj);
+        audioObject.src = musicobj.src;
+        $('.control .control-title').innerText = musicobj.title + "   -  " + musicobj.auther;
+        $('.music-border1 img').src = musicobj.img;
+        $('.music .info').style.backgroundImage = 'url("' + musicobj.img + '")';
+        $('.bg').style.background = 'url("' + musicobj.img + '")';
+    }
+
+    getMusicList(function (list) {
+        musiclist = list;
+        console.log(list);
+        console.log(musiclist);
+        musiclist.forEach(function (val) {
+            var newli = document.createElement('li');
+            newli.innerText = val.title + '-' + val.auther;
+            $('.music-list').appendChild(newli);
+        })
+        loadMusic(list[currentIndex]);
+
+    })
+
+
+
+
+    audioObject.ontimeupdate = function () {
+        $('.bar .progress-now').style.width = (this.currentTime / this.duration)*100 + "%";
+    }
+
+//    暂停 播放
+    audioObject.onplay = function () {
+        clock = setInterval(function () {
+            var time  = audioObject.currentTime ;
+            var second  = Math.floor(time % 60)+ '';
+            second = second.length === 2 ?second  : '0'+ second;
+            var con = Math.floor(time / 60) + ':';
+            $('.progress .time').innerText = con + second;
+        },1000)
+    }
+    audioObject.onpause = function () {
+        clearInterval(clock);
+    }
+
+
+    var pp = $('#pp');
+   pp.onclick = function () {
+        if(this.classList.contains('pause')) {
+            audioObject.play();
+            this.innerHTML = "&#xe7af;"
+            this.classList.remove('pause');
+            this.classList.add('play');
+        }else if(this.classList.contains('play')) {
+            audioObject.pause();
+            this.innerHTML = "&#xe61e;"
+            this.classList.remove('play');
+            this.classList.add('pause');
+        }
+    }
+
+//    暂停播放end
+    audioObject.onended = function () {
+        currentIndex = (++currentIndex)%musiclist.length;
+        console.log(currentIndex);
+        loadMusic(musiclist[currentIndex]);
+        audioObject.play();
+        pp.innerHTML = "&#xe7af;"
+        pp.classList.remove('pause');
+        pp.classList.add('play');
+    }
+
+    $('.control .next').onclick = function () {
+        currentIndex = (++currentIndex)%musiclist.length;
+        console.log(currentIndex);
+        loadMusic(musiclist[currentIndex]);
+        audioObject.play();
+        pp.innerHTML = "&#xe7af;"
+        pp.classList.remove('pause');
+        pp.classList.add('play');
+    }
+
+    $('.control .previous').onclick  = function () {
+        if(currentIndex === 0) {
+            currentIndex = musiclist.length - 1;
+        }else {
+            currentIndex = (--currentIndex)%musiclist.length;
+            loadMusic(musiclist[currentIndex]);
+            audioObject.play();
+            pp.innerHTML = "&#xe7af;"
+            pp.classList.remove('pause');
+            pp.classList.add('play');
+        }
+    }
+
+    $('.progress .bar').onclick = function (e) {
+        var percent = e.offsetX / parseInt(getComputedStyle(this).width);
+        audioObject.currentTime = audioObject.duration * percent;
+        var time  = audioObject.currentTime ;
+        var second  = Math.floor(time % 60)+ '';
+        second = second.length === 2 ?second  : '0'+ second;
+        var con = Math.floor(time / 60) + ':';
+        $('.progress .time').innerText = con + second;
+        $('.progress .progress-now').style.width = percent + '%'
+    }
+    $('.control .control2 > p').onclick = function () {
+        if(this.classList.contains('volume')){
+            this.innerHTML = '&#xe61e;';
+            this.classList.remove('volume');
+            this.classList.add('no-volume');
+            audioObject.volume = 0;
+        }else {
+            this.innerHTML = '&#xe757;';
+            this.classList.remove('no-volume');
+            this.classList.add('volume');
+            audioObject.volume = 1;
+        }
+    }
+    $('document').bind("selectstart", function () { return false; });
+</script>
+</body>
+</html>

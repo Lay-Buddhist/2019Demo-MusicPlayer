@@ -1,0 +1,224 @@
+.left {
+    width: 0;
+    height: 0;
+    border: 30px solid transparent;
+    border-left-color: red;
+}
+.right {
+    width: 0;
+    height: 0;
+    border: 30px solid transparent;
+    border-right-color: red;
+}
+.bg {
+    background: url('http://p2.music.126.net/THitUnu7hNMmlSwf-pU6Pw==/109951163112321465.jpg?param=130y130');
+    height: 100%;
+    text-align: center;
+    line-height: 100%;
+}
+.bg-blur {
+    float: left;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    -webkit-filter: blur(15px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(50px);
+}
+.cover {
+    width: 100%;
+    height: 100%;
+}
+.panel {
+    box-shadow: 1px -1px 16px -4px rgba(0,0,0,.75);
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 100px auto;
+    height: 550px;
+    float: none;
+    /*border-radius: 20px;*/
+}
+aside {
+    height: 100%;
+    background: rgba(0,0,0,.2);
+}
+.music-box {
+    height: 100%;
+    background: linear-gradient(to top right,rgb(211,214,219) 0%,rgb(228,222,224) 50%,rgb(246,233,225) 100%);
+}
+.music-box .music-intro {
+    width: 100%;
+    height: 88%;
+    padding-top: 90px;
+}
+.music-intro .music-border4 {
+    margin: 0 auto;
+    position: relative;
+    width: 0;
+    height: 0;
+    padding: 150px;
+    border: 3px solid rgba(203,204,176,.8);
+    border-radius: 50%;
+    box-shadow: 1px -1px 16px -4px rgba(0,0,0,.75);
+}
+.music-intro .music-border3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    padding: 149px;
+    background: linear-gradient(to top right,#333333,#888888);
+}
+.music-intro .music-border2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    padding: 130px;
+    background: linear-gradient(to top right,#cccccc,#333);
+}
+.music-intro .music-border1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    width: 100%;
+    height:100%;
+    border: 10px solid #333;
+}
+.music-border4-animate {
+    animation: circle linear 25s infinite;
+}
+@keyframes circle {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.music-intro .music-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+}
+.music-box .regulator {
+    width: 100%;
+    height: 12%;
+}
+.regulator .progress .bar {
+    width: 100%;
+}
+.progress .bar .progress-total {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+.progress .bar .progress-now {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background-color: #ba8f59;
+}
+.progress .time {
+    float: right;
+    padding-right: 25px;
+    font-size: 12px;
+    font-family: "Adobe Fan Heiti Std B";
+}
+.regulator .music {
+    width: 100%;
+    height: 100%;
+}
+.regulator .music .info {
+    height: 100%;
+    background: url("http://p2.music.126.net/THitUnu7hNMmlSwf-pU6Pw==/109951163112321465.jpg?param=130y130") center center no-repeat;
+    background-size: cover ;
+}
+.regulator .music .control {
+    text-align: center;
+}
+.regulator .music .control .control-title {
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.regulator .music .control > span{
+    cursor:pointer ;
+    font-size: 28px;
+    padding: 5px;
+    border: 1px solid #888;
+    border-radius: 50%;
+    background-color: rgba(100,100,100,.1);
+    margin-right: 20px;
+    transition: all 0.3s linear;
+}
+.regulator .music .control > span:hover {
+    background-color: rgba(100,100,100,.5);
+}
+.regulator .control .control2{
+    height: 100%;
+    padding-top: 15px;
+}
+.regulator .control .control2 > a {
+    cursor:pointer ;
+    font-size: 20px;
+    padding: 5px;
+    border: 1px solid #888;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.regulator .control .control2 > p {
+    display: inline-block;
+    position: relative;
+    cursor:pointer ;
+    font-size: 20px;
+    padding: 4px;
+    border: 1px solid #888;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+aside > h2 {
+    text-align: left;
+    padding: 20px 0 20px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #888;
+    color: rgb(225,225,225);
+}
+aside .music-list{
+    width: 100%;
+    /*height: 100%;*/
+    overflow:hidden ;
+}
+aside .music-list li {
+    width: 100%;
+    padding: 9px 0 9px 20px;
+    border-bottom: 1px solid #888888;
+    font-family: "Adobe Arabic";
+    color: rgb(225,225,225);
+    cursor: pointer;
+    transition: all 0.3s linear;
+    font-size: 14px;
+}
+aside .music-list > li:hover {
+    background-color: rgba(200,153,98,1);
+}
+.cancelselect{
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;}
